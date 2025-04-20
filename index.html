@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <title>Library</title>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <h1>My Library</h1>
+            <button class="new-book">
+                <img src="resources/book-plus-outline.svg" alt="">
+                New Book
+            </button>
+        </div>  
+    </header>
+    <main>
+        <dialog data-modal>
+            <div class="modal-header">
+                <img src="resources/close.svg" alt="close">
+            </div>
+            <form>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title">
+
+                <label for="author">Author</label>
+                <input type="text" name="author" id="author">
+
+                <label for="pages">Pages</label>
+                <input type="number" name="number" id="number">
+
+                <label for="read">Read</label>
+                <input type="radio" name="status" id="read" value="Read">
+
+                <label for="unread">Not Read</label>
+                <input type="radio" name="status" id="unread" value="Not Read">
+            </form>
+        </dialog>
+        <div class="grid-container">
+            
+        </div>
+    </main>
+    <footer>
+        <p>Test Footer</p>
+    </footer>
+</body>
+
+</html>
