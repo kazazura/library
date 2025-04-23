@@ -1,6 +1,7 @@
 const gridContainer = document.querySelector('.grid-container');
 const newBookBtn = document.querySelector('.new-book');
-const dialog = document.querySelector("[data-modal]");
+const dialog = document.querySelector('[data-modal]');
+const closeBtn = document.querySelector('.close-button');
 
 const myLibrary = [];
 
@@ -11,6 +12,14 @@ function Book(book_id, title, author, pages, status, cover_img) {
     this.pages = pages;
     this.status = status;
     this.cover_img = cover_img;
+}
+
+Book.prototype.changeStatus = function () {
+    if(this.status === 'Read') {
+        this.status = 'Unread';
+    } else {
+        this.status = 'Read';
+    }
 }
 
 function addBookToLibrary(title, author, pages, status, cover_img) {
@@ -54,23 +63,46 @@ function displayBook(book) {
     const actions = document.createElement('div');
     actions.classList.add('actions');
 
-    const statusBtn = document.createElement('img');
-    statusBtn.classList.add('status-button');
-    statusBtn.setAttribute("src", "resources/book-open-page-variant-outline.svg");
+    const statusBtnImg = document.createElement('img');
+    statusBtnImg.classList.add('status-button-img');
+    statusBtnImg.setAttribute("src", "resources/book-open-page-variant-outline.svg");
 
-    const deleteBtn = document.createElement('img');
+    const deleteBtnImg = document.createElement('img');
+    deleteBtnImg.classList.add('delete-button-img');
+    deleteBtnImg.setAttribute("src", "resources/delete-outline.svg");
+
+    const statusBtn = document.createElement('button');
+    statusBtn.classList.add('delete-button');
+
+    const deleteBtn = document.createElement('button');
     deleteBtn.classList.add('delete-button');
-    deleteBtn.setAttribute("src", "resources/delete-outline.svg");
-
 
     card.appendChild(title);
     card.appendChild(author);
     card.appendChild(pages);
     card.appendChild(status);
     card.appendChild(actions);
+    statusBtn.appendChild(statusBtnImg);
+    deleteBtn.appendChild(deleteBtnImg);
     actions.appendChild(statusBtn);
     actions.appendChild(deleteBtn);
     gridContainer.appendChild(card);
+
+    function bookControls() {
+        deleteBtn.addEventListener('click', () => {
+            console.log("Hello");
+        });
+
+        statusBtn.addEventListener('click', ()=> {
+            if(book.status === 'Read') {
+                status.textContent = book.status;
+            } else if (book.status === 'Unread') {
+                status.textContent = book.status;
+            }
+            book.changeStatus();
+        });
+    }
+    bookControls();
 }
 
 function addToDisplay() {
@@ -80,16 +112,21 @@ function addToDisplay() {
 }
 
 function newBook() {
-    newBookBtn.addEventListener('click', ()=> {
+    newBookBtn.addEventListener('click', () => {
         dialog.showModal();
     });
 }
 
-
-
+function closeModal() {
+    closeBtn.addEventListener('click', () => {
+        dialog.close();
+    });
+}
 
 addToDisplay();
 newBook();
+
+//fix status
 
 
 
