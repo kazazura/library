@@ -22,23 +22,47 @@
     <main>
         <dialog data-modal>
             <div class="modal-header">
-                <img src="resources/close.svg" alt="close">
+                <h1>New Book</h1>
             </div>
             <form>
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title">
+                <div class="input">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title">
+                </div>
 
-                <label for="author">Author</label>
-                <input type="text" name="author" id="author">
+                <div class="input">
+                    <label for="author">Author</label>
+                    <input type="text" name="author" id="author">
+                </div>
 
-                <label for="pages">Pages</label>
-                <input type="number" name="number" id="number">
+                <div class="input">
+                    <label for="pages">Pages</label>
+                    <input type="number" name="pages" id="pages">
+                </div>
 
-                <label for="read">Read</label>
-                <input type="radio" name="status" id="read" value="Read">
+                <div class="status">
+                    <p>Status</p>
+                    <div class="radio">
+                        <div class="radio-input">
+                            <label for="read">Read</label>
+                            <input type="radio" name="status" id="read" value="Read" checked>
+                        </div>
+                        <div class="radio-input">
+                            <label for="unread">Not Read</label>
+                            <input type="radio" name="status" id="unread" value="Not Read">
+                        </div>
+                    </div>
+                </div>
 
-                <label for="unread">Not Read</label>
-                <input type="radio" name="status" id="unread" value="Not Read">
+                <div class="file-selector">
+                    <label for="cover">Cover</label>
+                    <input type="file"  name="cover" id="cover">
+                </div>
+
+                <div class="dialog-buttons">
+                    <button class="close-button">Close</button>
+                    <button class="submit-button" type="submit">Add Book</button>
+                </div>
             </form>
         </dialog>
         <div class="grid-container">
