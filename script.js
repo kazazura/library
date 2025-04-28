@@ -15,11 +15,7 @@ function Book(book_id, title, author, pages, status, cover_img) {
 }
 
 Book.prototype.changeStatus = function () {
-    if(this.status === 'Read') {
-        this.status = 'Unread';
-    } else {
-        this.status = 'Read';
-    }
+    this.status === 'Read' ? this.status = 'Unread' : this.status = 'Read';
 }
 
 function addBookToLibrary(title, author, pages, status, cover_img) {
@@ -35,13 +31,10 @@ addBookToLibrary('Kizumonogatari', 'Nisio Isin', '354 pages', 'Read', 'url(image
 addBookToLibrary('The Little Prince', 'Antoine de Saint-Exupéry', '96 pages', 'Read', 'url(images/157993.jpg)');
 addBookToLibrary('The Lord of the Rings', 'J.R.R. Tolkien', '1077 pages', 'Read', 'url(images/First_Single_Volume_Edition_of_The_Lord_of_the_Rings.gif)');
 
-myLibrary.forEach((book) => {
-    console.log(book);
-});
-
-function displayBook(book) {
+function createBookCard(book) {
     const card = document.createElement('div');
     card.classList.add('card');
+    card.setAttribute('id', book.book_id);
     card.style.backgroundImage = book.cover_img;
 
     const title = document.createElement('p');
@@ -90,43 +83,75 @@ function displayBook(book) {
 
     function bookControls() {
         deleteBtn.addEventListener('click', () => {
-            console.log("Hello");
+            let index = myLibrary.findIndex(b => b.book_id === book.book_id);
+            if (index !== -1) {
+                myLibrary.splice(index, 1);
+                card.remove();
+            }
         });
 
-        statusBtn.addEventListener('click', ()=> {
-            if(book.status === 'Read') {
+        statusBtn.addEventListener('click', () => {
+            if (book.status === 'Read') {
+                book.changeStatus();
                 status.textContent = book.status;
             } else if (book.status === 'Unread') {
+                book.changeStatus();
                 status.textContent = book.status;
             }
-            book.changeStatus();
         });
     }
     bookControls();
 }
 
 function addToDisplay() {
-    myLibrary.forEach((book) => {
-        displayBook(book);
-    });
+    gridContainer.innerHTML = ''
+    for (let i = 0; i < myLibrary.length; i++) {
+        createBookCard(myLibrary[i]);
+    }
 }
 
-function newBook() {
-    newBookBtn.addEventListener('click', () => {
-        dialog.showModal();
-    });
+newBookBtn.addEventListener('click', () => {
+    dialog.showModal();
+});
+
+async function imageUrlToUrl(imageUrl) {
+    try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        return `url('${blobUrl}')`;
+    } catch (error) {
+        console.error("Error converting image URL to url():", error);
+        return null;
+    }
 }
 
-function closeModal() {
-    closeBtn.addEventListener('click', () => {
-        dialog.close();
-    });
-}
+document.querySelector('.form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const title = document.querySelector('#title').value;
+    const author = document.querySelector('#author').value;
+    const pages = document.querySelector('#pages').value;
+    const status = document.querySelector('input[name="status"]:checked').value;
+    const cover = document.querySelector('#cover').value;
+
+    imageUrlToUrl(cover)
+        .then(cssUrl => {
+            if (cssUrl) {
+                const coverUrl = cssUrl;
+                console.log(coverUrl);
+                addBookToLibrary(title, author, pages, status, coverUrl);
+                addToDisplay();
+                this.reset();
+            }
+        });
+});
+
+closeBtn.addEventListener('click', () => {
+    dialog.close();
+});
+
+myLibrary.forEach((book) => {
+    console.log(book);
+});
 
 addToDisplay();
-newBook();
-
-//fix status
-
-
-
